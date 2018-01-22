@@ -10,7 +10,7 @@
     <h3>{{ step.title }}</h3>
     {{ step.description|markdown_to_html }}
     {% with con=step.content %}
-        {{ con|markdown_to_html|linebreaks }} 
+        {{ con|markdown_to_html|linebreaks }}
         Content: {{ con|wordcount}} words.
         Estimated time: {{ con|wordcount|time_estimate}} minute{{ con|wordcount|time_estimate|pluralize}}
     {% endwith %}
