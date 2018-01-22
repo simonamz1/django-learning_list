@@ -1,1 +1,1 @@
-# django-learning_list
+# django-learning_site
