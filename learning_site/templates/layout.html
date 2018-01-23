@@ -2,18 +2,17 @@
 {% load static from staticfiles %}
 {% load course_extras %}
 <html class="no-js" lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/foundation.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/layout.css' %}">
-    {% block css %}{% endblock %}
-    <script src="{% static 'js/vendor/modernizr.js' %}"></script>
-    <meta class="foundation-mq">
-</head>
-<body>
-    <div class="row">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'css/foundation.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+        {% block css %}{% endblock %}
+        <script src="{% static 'js/vendor/modernizr.js' %}"></script>
+        <meta class="foundation-mq">
+    </head>
+    <body>
         <nav class="top-bar" role="navigation">
             <section class="top-bar-left">
                 <ul class="dropdown menu" data-dropdown-menu role="menubar">
@@ -22,29 +21,33 @@
                         <a href="#">Courses</a>
                         <ul class="submenu menu vertical" data-submenu role="menu">
                             {% nav_courses_list %}
-                            <li><a href="{% url 'courses:course_list' %}">See all &rarr;</a></li>
+                            <li><a href="{% url 'courses:list' %}">See all &rarr;</a></li>
                         </ul>
                     </li>
                 </ul>
             </section>
         </nav>
         {% if messages %}
-        <div class="small-6 small-centered columns">
-            {% for message in messages %}
-            <div data-alert class="alert-box {{ message.tags }} radius">
-                {{ message }}
-                <a href="{% url 'courses:course_list' %}">&times;</a>
+            <div class="row">
+                <div class="small-6 small-centered columns">
+                    {% for message in messages %}
+                        <div data-alert class="callout {{ message.tags }}">
+                            {{ message }}
+                            <a href="#" class="close">&times;</a>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
-            {% endfor %}
-        </div>
         {% endif %}
         {% block content %}{% endblock %}
         <footer class="row columns">
             <hr/>
-            <p>&copy; The Learning Site</p>
+            <div class="small-6 columns">
+                <p>&copy; The Learning Site</p>
+            </div>
             <div class="small-6 columns">
                 <ul class="inline-list no-bullet float-right">
-                    <li><a href="{% url 'courses:course_list' %}">Courses</a></li>
+                    <li><a href="{% url 'courses:list' %}">Courses</a></li>
                 </ul>
             </div>
         </footer>
@@ -53,6 +56,5 @@
         <script src="{% static 'js/foundation.min.js' %}"></script>
         {% block javascript %}{% endblock %}
         <script>$(document).foundation();</script>
-    </div>
-</body>
+    </body>
 </html>
