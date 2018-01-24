@@ -30,8 +30,8 @@ class Text(Step):
 
     def get_absolute_url(self):
         return reverse('courses:text', kwargs={
-                'course_pk': self.course.pk,
-                'step_pk': self.pk
+                'course_pk': self.course_id,
+                'step_pk': self.id
             })
 
 
