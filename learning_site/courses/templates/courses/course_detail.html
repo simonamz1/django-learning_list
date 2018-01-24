@@ -1,5 +1,5 @@
 {% extends "courses/layout.html" %}
-{% load humanize course_extras %}
+{% load course_extras %}
 
 {% block title %}{{ course.title }}{% endblock %}
 
@@ -8,7 +8,7 @@
         {{ block.super }}
         <article>
             <h1 class="">{{ course.title }}</h1>
-                <p>There are {{ steps|length|apnumber }} step{{ steps|length|pluralize }} in this course: {{ steps|join:", " }}</p>
+            
             <div class="callout secondary">
                 {{ course.description|markdown_to_html }}
             </div>

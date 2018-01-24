@@ -1,19 +1,17 @@
 from itertools import chain
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
+
 from . import forms
 from . import models
 
 
 def course_list(request):
     courses = models.Course.objects.all()
-    email = 'questions@learning-site.com'
-    return render(request, 'courses/course_list.html', {
-        'courses': courses,
-        'email': email
-        })
+    return render(request, 'courses/course_list.html', {'courses': courses})
 
 
 def course_detail(request, pk):
@@ -50,3 +48,18 @@ def quiz_create(request, course_pk):
             messages.add_message(request, messages.SUCCESS, "Quiz added!")
             return HttpResponseRedirect(quiz.get_absolute_url())
     return render(request, 'courses/quiz_form.html', {'form': form})
+
+
+@login_required
+def quiz_edit(request, course_pk, quiz_pk):
+    quiz = get_object_or_404(models.Quiz, pk=quiz_pk, course_id=course_pk)
+    form = forms.QuizForm(instance=quiz)
+
+    if request.method == 'POST':
+        form = forms.QuizForm(instance=quiz, data=request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Updated {}".format(form.cleaned_data['title']))
+            return HttpResponseRedirect(quiz.get_absolute_url())
+
+    return render(request, 'courses/quiz_form.html', {'form': form, 'course': quiz.course})
